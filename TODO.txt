@@ -1,0 +1,8 @@
+
+1) Caltech Dataset
+- set of 101 different objects, each with 40 - 800 images per category
+
+2) Using Sift
+  - Intuition
+    - SIFT allows for extraction of corner values on rotated, scaled images
+  - Output is a keypoint descriptor, which is a 128D vector describing findings
