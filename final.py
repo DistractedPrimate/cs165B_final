@@ -201,6 +201,6 @@ class Visual_BOW():
         return accuracy
 
 if __name__ == "__main__":
-    alg = Visual_BOW(k=2, dictionary_size=10)
+    alg = Visual_BOW(k=20, dictionary_size=50)
     accuracy = alg.algorithm()
     print("Final accuracy of the model is:", accuracy)
