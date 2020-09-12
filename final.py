@@ -45,16 +45,19 @@ class Visual_BOW():
                 pass
             else:
                 #print(files)
-                print(directories)
-                print(root)
-                print(os.path.basename(root))
-                for file in files:
-                    image = root + '/' + file
-                    img = cv.imread(image)
-                    keypoints, desc = sift.detectAndCompute(img, None)
-                    if desc is not None:
-                        labels.append(os.path.basename(root))
-                        features.append(desc[:self.k])
+                #print(directories)
+                #print(root)
+                if os.path.basename(root) == "BACKGROUND_Google":
+                    pass
+                else:
+                    print(os.path.basename(root))
+                    for file in files:
+                        image = root + '/' + file
+                        img = cv.imread(image)
+                        keypoints, desc = sift.detectAndCompute(img, None)
+                        if desc is not None:
+                            labels.append(os.path.basename(root))
+                            features.append(desc[:self.k])
 
         data = list(zip(labels, features))
         random.shuffle(data)
@@ -175,11 +178,12 @@ class Visual_BOW():
         '''
         pca = PCA(n_components=2)
         pca.fit(features)
-        NUM_COLORS = 102
+        labels_unique = list(set(labels))
+        NUM_COLORS = len(labels_unique)
         cm = plt.get_cmap('gist_rainbow')
 
         colors=[cm(1.*i/NUM_COLORS) for i in range(NUM_COLORS)]
-        labels_unique = list(set(labels))
+        
         dictionary_colors = dict(zip(labels_unique, colors))
 
         plt.scatter(features @ pca.components_.T[:,0], features @ pca.components_.T[:,1], c=[dictionary_colors[label] for label in labels])
