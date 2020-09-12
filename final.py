@@ -171,9 +171,14 @@ class Visual_BOW():
         '''
         pca = PCA(n_components=2)
         pca.fit(features)
-        df = pd.DataFrame(dict(PCA1=features @ pca.components_.T[:,0], PCA2=features @ pca.components_.T[:,1], color=labels))
+        NUM_COLORS = 102
+        cm = plt.get_cmap('gist_rainbow')
 
-        sns.scatterplot('PCA1', 'PCA2', data=df, hue='color', legend=False)
+        colors=[cm(1.*i/NUM_COLORS) for i in range(NUM_COLORS)]
+        labels_unique = list(set(labels))
+        dictionary_colors = dict(zip(labels_unique, colors))
+
+        plt.scatter(features @ pca.components_.T[:,0], features @ pca.components_.T[:,1], c=[dictionary_colors[label] for label in labels])
         plt.savefig('PCA.png')
 
 ############################################################################
@@ -196,6 +201,6 @@ class Visual_BOW():
         return accuracy
 
 if __name__ == "__main__":
-    alg = Visual_BOW(k=20, dictionary_size=200)
+    alg = Visual_BOW(k=2, dictionary_size=10)
     accuracy = alg.algorithm()
     print("Final accuracy of the model is:", accuracy)
