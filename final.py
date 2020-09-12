@@ -1,6 +1,10 @@
 import cv2 as cv
 import numpy as np
 import random
+#Trying this
+import matplotlib
+matplotlib.use('Agg')
+#######
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans, MiniBatchKMeans
 from sklearn import svm
